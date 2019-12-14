@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.xml.sax.SAXException;
 
 import com.rabo.app.exception.DataValidationException;
 import com.rabo.app.service.CSVService;
@@ -73,6 +76,20 @@ public class StatementValidationController {
 	public ResponseEntity<ApiError> handleDataValidationException(DataValidationException ex){
 	ApiError error = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,"Internal Error", ex.getMessage());
 		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
+	@ExceptionHandler(ParserConfigurationException.class)
+	public ResponseEntity<ApiError> handleParserConfigurationException(ParserConfigurationException ex){
+	ApiError error = new ApiError(HttpStatus.BAD_REQUEST,"CSV File Parse Error", ex.getMessage());
+		return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+		
+	}
+	
+	@ExceptionHandler(SAXException.class)
+	public ResponseEntity<ApiError> handleSAXException(SAXException ex){
+	ApiError error = new ApiError(HttpStatus.BAD_REQUEST,"XML File parse Error", ex.getMessage());
+		return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
 		
 	}
 }
