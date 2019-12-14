@@ -1,5 +1,6 @@
 package com.rabo.app.servcice.impl;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,10 +23,10 @@ public class CSVServiceImpl implements CSVService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CSVServiceImpl.class);
 	
-	public List<StatementResponse> getCSVResult() throws DataValidationException {
+	public List<StatementResponse> getCSVResult(InputStream inputStream) throws DataValidationException {
 		logger.debug("getCSVResult method start");
 		List<StatementResponse> resultList = null;
-		List<CustomerStatementDTO> csvList = csvServiceHelper.getCSV();
+		List<CustomerStatementDTO> csvList = csvServiceHelper.getCSV(inputStream);
 		
 		if (csvList != null) {
 			resultList = csvServiceHelper.validateCSVData(csvList);
