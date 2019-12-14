@@ -39,7 +39,7 @@ public class CSVServiceHelper {
 
 	private static final Logger logger = LoggerFactory.getLogger(CSVServiceHelper.class);
 
-	public List<CustomerStatementDTO> getCSV() {
+	public List<CustomerStatementDTO> getCSV() throws DataValidationException {
 		List<CustomerStatementDTO> csvList = null;
 		logger.debug("getCSV method start");
 		try {
@@ -64,6 +64,7 @@ public class CSVServiceHelper {
 			}
 		} catch (Exception e) {
 			logger.error("Exception in getCSV() method" + e.getMessage());
+			throw new DataValidationException(e.getMessage());
 		}
 		logger.debug("getCSV method end");
 		return csvList;
