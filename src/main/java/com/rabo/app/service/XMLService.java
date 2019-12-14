@@ -6,7 +6,6 @@ import java.util.List;
 import com.rabo.app.exception.DataValidationException;
 import com.rabo.dto.StatementResponse;
 
-public interface CSVService {
-
-	List<StatementResponse> getCSVResult(InputStream inputStream) throws DataValidationException;
+public interface XMLService {
+	List<StatementResponse> getXMLResult(InputStream inputStream) throws DataValidationException;
 }
